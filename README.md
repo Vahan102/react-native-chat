@@ -118,16 +118,11 @@ The backend will run on `http://localhost:3000`.
 ```bash
 cd my-app
 
-# Install dependencies
 npm install
 
-# Start Expo development server
+
 npm start
 
-# Choose platform:
-# 'a' - Android
-# 'i' - iOS
-# 'w' - Web
 ```
 
 ## Available Scripts
