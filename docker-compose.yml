@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: discord-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-password}
+      - DB_NAME=${DB_NAME:-discord_db}
+    depends_on:
+      - mysql
+    networks:
+      - discord-network
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.0
+    container_name: discord-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_DATABASE: ${DB_NAME:-discord_db}
+      MYSQL_USER: ${DB_USER:-discord_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - discord-network
+    restart: unless-stopped
+
+networks:
+  discord-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

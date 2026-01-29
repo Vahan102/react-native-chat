@@ -22,7 +22,7 @@ async function deleteMsg(msg: any, ws: WebSocket, users: Map<any, any>) {
             user = await getUser(msg.email);
             if ("email" in user && typeof msg.img == "string" && typeof msg.text == "string") {
 
-                await deleteMessege("?");
+                await deleteMessege();
 
                 const targetSocket = users.get(msg.email);
                 if (targetSocket && targetSocket.readyState === WebSocket.OPEN) {
@@ -31,8 +31,10 @@ async function deleteMsg(msg: any, ws: WebSocket, users: Map<any, any>) {
                         from: user.email,
                         text: msg.text
                     }));
+                    return;
                 } else {
                     ws.send(JSON.stringify({ error: "Server can't find a user in websocket server." }));
+                    return;
                 };
             }
         }

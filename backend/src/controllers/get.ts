@@ -3,7 +3,6 @@ import { getAdminServers, getFriends, getGroupMembers, getServerByLink, getServe
 import { length } from "zod/v4";
 import { link } from "fs";
 
-const a:string = 5;
 
 export async function getUserServersController(req: Request, res: Response) {
     try {
